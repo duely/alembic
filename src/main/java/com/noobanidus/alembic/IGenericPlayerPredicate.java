@@ -1,4 +1,4 @@
-package com.noobanidus.alembic.advancements;
+package com.noobanidus.alembic;
 
 import com.google.gson.JsonElement;
 import net.minecraft.entity.player.EntityPlayerMP;

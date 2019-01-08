@@ -1,6 +1,5 @@
-package com.noobanidus.alembic.advancements;
+package com.noobanidus.alembic;
 
-import com.noobanidus.alembic.Alembic;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
