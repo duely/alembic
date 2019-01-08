@@ -1,0 +1,21 @@
+[
+  {
+    "modid": "alembic",
+    "name": "Alembic",
+    "description": "Research-driven advancements from Thaumcraft for advancement-driven quest & mod packs",
+    "version": "${version}",
+    "credits": "Noobanidus",
+    "logoFile": "assets/alembic/textures/logo.png",
+    "mcversion": "${mc_version}",
+    "url": "http://github.com/duely/alembic",
+    "updateUrl": "",
+    "authorList": [
+      "Noobanidus"
+    ],
+    "parent": "",
+    "screenshots": [],
+    "dependencies": [
+      "forge"
+    ]
+  }
+]
