@@ -1,13 +1,11 @@
 package com.noobanidus.alembic;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.noobanidus.alembic.advancements.GenericTrigger;
 import com.noobanidus.alembic.advancements.ResearchPredicate;
 import com.noobanidus.alembic.commands.ResearchCommand;
 import com.noobanidus.alembic.events.AlembicEvents;
 import net.minecraft.advancements.*;
-import net.minecraft.command.CommandHandler;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +79,7 @@ public class Alembic {
         custom.forEach((rl, string) -> {
             // display needs to be the same
             GenericTrigger.Instance instance = new GenericTrigger.Instance(THAUMCRAFT_RESEARCH_TRIGGER.getId(), new ResearchPredicate(string));
-            Map<String, Criterion> criteria = Maps.newHashMap();
+            Map<String, Criterion> criteria = new HashMap<>();
             criteria.put("thaumcraft", new Criterion(instance));
             Advancement m = new Advancement(rl, root, root.getDisplay(), AdvancementRewards.EMPTY, criteria, new String[][]{{"thaumcraft"}});
 
@@ -101,7 +100,7 @@ public class Alembic {
 
         @SuppressWarnings("unhandled")
         public static Map<ResourceLocation, List<String>> getCustomResearches () {
-            Map<ResourceLocation, List<String>> result = Maps.newHashMap();
+            Map<ResourceLocation, List<String>> result = new HashMap<>();
 
             String[] temp;
 

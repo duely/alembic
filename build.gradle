@@ -23,7 +23,7 @@ compileJava {
 minecraft {
     version = "1.12.2-14.23.5.2768"
     runDir = "run"
-    mappings = "snapshot_20180407"
+    mappings = "stable_39"
     useDepAts = true
 
     replace "GRADLE:VERSION", project.version
@@ -39,11 +39,17 @@ artifacts {
 }
 
 repositories {
+    maven {
+        url = "http://maven.thiakil.com"
+    }
+    maven {
+        url = "http://minecraft.curseforge.com/api/maven/"
+    }
 }
 
 dependencies {
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+    deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
+    deobfCompile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
 }
 
 runClient {

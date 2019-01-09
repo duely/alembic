@@ -1,6 +1,5 @@
 package com.noobanidus.alembic.advancements;
 
-import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -28,7 +27,7 @@ public class ResearchPredicate implements IGenericPlayerPredicate {
     public ResearchPredicate deserialize(@Nullable JsonElement element) {
         if (element != null && !element.isJsonNull()) {
             JsonObject jsonobject = element.getAsJsonObject();
-            List<String> researchTypes = Lists.newArrayList();
+            List<String> researchTypes = new ArrayList<>();
 
             if (jsonobject.has("research")) {
                 for (JsonElement elem : JsonUtils.getJsonArray(jsonobject, "research")) {

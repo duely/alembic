@@ -1,8 +1,5 @@
 package com.noobanidus.alembic.advancements;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.ICriterionTrigger;
@@ -12,13 +9,16 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class GenericTrigger implements ICriterionTrigger<GenericTrigger.Instance> {
     private final ResourceLocation id;
-    private final Map<PlayerAdvancements, GenericTrigger.Listeners> listeners = Maps.newHashMap();
+    private final Map<PlayerAdvancements, GenericTrigger.Listeners> listeners = new HashMap<>();
     private final IGenericPlayerPredicate predicate;
 
     public GenericTrigger(String id, IGenericPlayerPredicate predicate) {
@@ -97,7 +97,7 @@ public class GenericTrigger implements ICriterionTrigger<GenericTrigger.Instance
 
     static class Listeners {
         PlayerAdvancements advancements;
-        Set<ICriterionTrigger.Listener<GenericTrigger.Instance>> listeners = Sets.newHashSet();
+        Set<ICriterionTrigger.Listener<GenericTrigger.Instance>> listeners = new HashSet<>();
 
         Listeners(PlayerAdvancements advancementsIn) {
             this.advancements = advancementsIn;
@@ -116,7 +116,7 @@ public class GenericTrigger implements ICriterionTrigger<GenericTrigger.Instance
         }
 
         void trigger(EntityPlayerMP player) {
-            List<ICriterionTrigger.Listener<GenericTrigger.Instance>> list = Lists.newArrayList();
+            List<ICriterionTrigger.Listener<GenericTrigger.Instance>> list = new ArrayList<>();
 
             for (ICriterionTrigger.Listener<GenericTrigger.Instance> listener : listeners) {
                 if (listener.getCriterionInstance().test(player)) {
