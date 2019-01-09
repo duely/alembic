@@ -15,13 +15,13 @@ public class ResearchPredicate implements IGenericPlayerPredicate {
     public static ResearchPredicate ANY = new ResearchPredicate(new ArrayList<>());
     private List<String> requirements;
 
-    private ResearchPredicate(List<String> requirements) {
+    public ResearchPredicate(List<String> requirements) {
         this.requirements = requirements;
     }
 
     @Override
     public boolean test(EntityPlayerMP player) {
-        return ThaumcraftCapabilities.knowsResearchStrict(player, (String[]) requirements.toArray());
+        return ThaumcraftCapabilities.knowsResearchStrict(player, requirements.toArray(new String[0]));
     }
 
     @Override
