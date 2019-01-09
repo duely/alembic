@@ -85,7 +85,7 @@ public class Alembic {
     @Config(modid=Alembic.MODID)
     public static class AlembicConfig {
         @Config.RequiresWorldRestart
-        @Config.Comment({"Syntax example: \"!Pech&&!Wisp,PechAndWisp\"", "Creates a custom research with the name: alembic:custom/pechandwisp"})
+        @Config.Comment({"Syntax example: \"!Pech&&!Wisp,PechAndWisp\"", "Creates a custom advancement with the name: alembic:custom/pechandwisp", "This advancement will trigger when both scan researches are complete."})
         @Config.Name("Custom Research")
         public static String[] custom = new String[]{};
 
