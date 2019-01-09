@@ -1,4 +1,4 @@
-package com.noobanidus.alembic;
+package com.noobanidus.alembic.advancements;
 
 import com.google.common.collect.Lists;
 import com.google.gson.JsonElement;

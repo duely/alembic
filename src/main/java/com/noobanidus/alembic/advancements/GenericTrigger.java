@@ -1,4 +1,4 @@
-package com.noobanidus.alembic;
+package com.noobanidus.alembic.advancements;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -80,10 +80,10 @@ public class GenericTrigger implements ICriterionTrigger<GenericTrigger.Instance
         }
     }
 
-    static class Instance extends AbstractCriterionInstance {
+    public static class Instance extends AbstractCriterionInstance {
         IGenericPlayerPredicate predicate;
 
-        Instance(ResourceLocation location, IGenericPlayerPredicate predicate) {
+        public Instance(ResourceLocation location, IGenericPlayerPredicate predicate) {
             super(location);
 
             this.predicate = predicate;

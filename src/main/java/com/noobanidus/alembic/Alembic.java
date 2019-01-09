@@ -2,13 +2,20 @@ package com.noobanidus.alembic;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.noobanidus.alembic.advancements.GenericTrigger;
+import com.noobanidus.alembic.advancements.ResearchPredicate;
+import com.noobanidus.alembic.commands.ResearchCommand;
+import com.noobanidus.alembic.events.AlembicEvents;
 import net.minecraft.advancements.*;
+import net.minecraft.command.CommandHandler;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
+import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -50,6 +57,9 @@ public class Alembic {
 
     @Mod.EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
+        if (event.getSide() == Side.CLIENT) {
+            ClientCommandHandler.instance.registerCommand(new ResearchCommand());
+        }
         LOG.info("Load Complete.");
     }
 

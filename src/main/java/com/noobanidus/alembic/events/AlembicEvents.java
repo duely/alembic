@@ -1,5 +1,6 @@
-package com.noobanidus.alembic;
+package com.noobanidus.alembic.events;
 
+import com.noobanidus.alembic.Alembic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
