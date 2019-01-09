@@ -13,6 +13,8 @@ import net.minecraftforge.client.IClientCommand;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import thaumcraft.api.research.ResearchCategories;
+import thaumcraft.api.research.ResearchCategory;
+import thaumcraft.api.research.ResearchEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,12 +56,14 @@ public class ResearchCommand extends CommandBase implements IClientCommand {
 
         String t = args[0].trim();
 
-        List<Boolean> resultFound = new ArrayList<>();
+        boolean resultFound = false;
 
         sender.sendMessage(new TextComponentString("--- --- Searching for research --- ---"));
 
-        ResearchCategories.researchCategories.forEach((catName, cat) -> {
-            cat.research.values().forEach((entry) -> {
+        for (Map.Entry<String, ResearchCategory> e : ResearchCategories.researchCategories.entrySet()) {
+            String catName = e.getKey();
+            ResearchCategory cat = e.getValue();
+            for (ResearchEntry entry : cat.research.values()) {
                 String k = entry.getKey().trim().toLowerCase();
 
                 if (k.contains(t) || t.contains(k)) {
@@ -68,12 +72,12 @@ public class ResearchCommand extends CommandBase implements IClientCommand {
                         stages.add(String.format("alembic:%s/%s@%d", catName.toLowerCase(), entry.getKey().toLowerCase(), i + 1));
                     }
                     sender.sendMessage(new TextComponentString(String.format("Found matching %s%s%s, keys: %s%s.", TextFormatting.LIGHT_PURPLE, entry.getLocalizedName(), TextFormatting.WHITE, TextFormatting.LIGHT_PURPLE, stages.toString())));
-                    resultFound.add(true);
+                    resultFound = true;
                 }
-            });
-        });
+            }
+        }
 
-        if (resultFound.size() == 0) {
+        if (!resultFound) {
             sender.sendMessage(new TextComponentString(String.format("No results found for Thaumcraft research using term [%s]", t)));
         }
     }
