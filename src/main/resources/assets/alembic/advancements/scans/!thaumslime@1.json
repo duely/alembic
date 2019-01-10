@@ -1,0 +1,20 @@
+{
+  "display": {
+    "icon": {
+      "item": "thaumcraft:primordial_pearl"
+    },
+    "title": "Research-driven Minecraft event.",
+    "description": "Research-driven Minecraft event.",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "parent": "alembic:root",
+  "criteria": {
+    "thaumcraft": {
+      "trigger": "alembic:research",
+      "conditions": {
+        "research": ["!ThaumSlime@1"]
+      }
+    }
+  }
+}
