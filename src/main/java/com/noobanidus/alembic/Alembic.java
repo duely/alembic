@@ -25,9 +25,8 @@ import java.util.Map;
 @Mod(modid = Alembic.MODID, name = Alembic.MODNAME, version = Alembic.VERSION, dependencies = Alembic.DEPENDS)
 @SuppressWarnings("WeakerAccess")
 public class Alembic {
-    public static final GenericTrigger THAUMCRAFT_RESEARCH_TRIGGER = CriteriaTriggers.register(new GenericTrigger(new ResourceLocation(Alembic.MODID, "research"), ResearchPredicate.ANY));
-
     public static final String MODID = "alembic";
+    public static final GenericTrigger THAUMCRAFT_RESEARCH_TRIGGER = CriteriaTriggers.register(new GenericTrigger(new ResourceLocation(Alembic.MODID, "research"), ResearchPredicate.ANY));
     public static final String MODNAME = "Alembic";
     public static final String VERSION = "GRADLE:VERSION";
     public static final String DEPENDS = "required-after:thaumcraft;";
@@ -56,10 +55,12 @@ public class Alembic {
 
     @Mod.EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
-        if (event.getSide() == Side.CLIENT) {
-            ClientCommandHandler.instance.registerCommand(new ResearchCommand());
-        }
         LOG.info("Load Complete.");
+    }
+
+    @Mod.EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        event.registerServerCommand(new ResearchCommand());
     }
 
     @Mod.EventHandler
@@ -75,6 +76,10 @@ public class Alembic {
         AdvancementList list = AdvancementManager.ADVANCEMENT_LIST;
 
         Advancement root = list.getAdvancement(new ResourceLocation(Alembic.MODID, "root"));
+        if (root == null) {
+            Alembic.LOG.info("Invalid root node alembic:root.");
+            return;
+        }
 
         custom.forEach((rl, string) -> {
             // display needs to be the same
@@ -91,7 +96,7 @@ public class Alembic {
         });
     }
 
-    @Config(modid=Alembic.MODID)
+    @Config(modid = Alembic.MODID)
     public static class AlembicConfig {
         @Config.RequiresWorldRestart
         @Config.Comment({"Syntax example: \"!Pech&&!Wisp,PechAndWisp\"", "Creates a custom advancement with the name: alembic:custom/pechandwisp", "This advancement will trigger when both scan researches are complete."})
@@ -100,11 +105,11 @@ public class Alembic {
 
         @Config.Comment("Specify number of seconds between checks for reearch")
         @Config.Name("Research Check Interval")
-        @Config.RangeInt(min=1)
+        @Config.RangeInt(min = 1)
         public static int interval = 9;
 
         @SuppressWarnings("unhandled")
-        public static Map<ResourceLocation, List<String>> getCustomResearches () {
+        public static Map<ResourceLocation, List<String>> getCustomResearches() {
             Map<ResourceLocation, List<String>> result = new HashMap<>();
 
             String[] temp;
