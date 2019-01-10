@@ -12,7 +12,7 @@ public class AlembicEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
 
-        if (!player.world.isRemote && player.ticksExisted % 160 == 0) {
+        if (!player.world.isRemote && player.ticksExisted % (Alembic.AlembicConfig.interval * 20) == 0) {
             Alembic.THAUMCRAFT_RESEARCH_TRIGGER.trigger((EntityPlayerMP) player);
         }
     }

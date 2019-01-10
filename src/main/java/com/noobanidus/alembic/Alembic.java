@@ -98,6 +98,11 @@ public class Alembic {
         @Config.Name("Custom Research")
         public static String[] custom = new String[]{};
 
+        @Config.Comment("Specify number of seconds between checks for reearch")
+        @Config.Name("Research Check Interval")
+        @Config.RangeInt(min=1)
+        public static int interval = 9;
+
         @SuppressWarnings("unhandled")
         public static Map<ResourceLocation, List<String>> getCustomResearches () {
             Map<ResourceLocation, List<String>> result = new HashMap<>();
