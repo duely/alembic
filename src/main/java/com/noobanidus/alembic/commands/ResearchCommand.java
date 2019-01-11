@@ -1,5 +1,6 @@
 package com.noobanidus.alembic.commands;
 
+import com.noobanidus.alembic.Alembic;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -89,7 +90,11 @@ public class ResearchCommand extends CommandBase {
                     ITextComponent entryName = new TextComponentString(entry.getLocalizedName()).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE));
                     ITextComponent keys = new TextComponentString(stages.toString()).setStyle(new Style().setColor(TextFormatting.LIGHT_PURPLE));
                     ITextComponent stage = stageResolver.apply(entry);
-                    sender.sendMessage(new TextComponentTranslation("command.research.matching", entryName, keys, stage));
+                    if (Alembic.AlembicConfig.isDesabled()) {
+                        sender.sendMessage(new TextComponentTranslation("command.research.matching_triumph", entryName, stage));
+                    } else {
+                        sender.sendMessage(new TextComponentTranslation("command.research.matching", entryName, keys, stage));
+                    }
                     resultFound = true;
                 }
             }

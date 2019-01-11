@@ -53,7 +53,11 @@ public class AlembicCommand extends CommandBase {
         String command = args[0].toLowerCase().trim();
 
         if (command.equals("count")) {
-            sender.sendMessage(new TextComponentTranslation("command.alembic.count", Alembic.RESEARCH_HANDLER.invalidAdvancementCount(), Alembic.RESEARCH_HANDLER.advancementCount()));
+            if (Alembic.AlembicConfig.isDesabled()) {
+                sender.sendMessage(new TextComponentTranslation("command.alembic.disabled"));
+            } else {
+                sender.sendMessage(new TextComponentTranslation("command.alembic.count", Alembic.RESEARCH_HANDLER.invalidAdvancementCount(), Alembic.RESEARCH_HANDLER.advancementCount()));
+            }
         }
     }
 }
