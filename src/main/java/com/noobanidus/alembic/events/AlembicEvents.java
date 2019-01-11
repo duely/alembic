@@ -33,6 +33,8 @@ public class AlembicEvents {
 
     @SubscribeEvent
     public static void onCommand(CommandEvent event) {
+        if (Alembic.AlembicConfig.isDesabled()) return;
+
         ICommand command = event.getCommand();
 
         if (command instanceof CommandReload) {

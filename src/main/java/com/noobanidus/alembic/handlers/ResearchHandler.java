@@ -39,7 +39,7 @@ public class ResearchHandler {
         return RESEARCH;
     }
 
-    public void buildResearch() {
+    private void buildResearch() {
         RESEARCH.clear();
 
         ResearchCategories.researchCategories.forEach((name, cat) -> {
@@ -53,7 +53,7 @@ public class ResearchHandler {
         });
     }
 
-    public void buildAdvancements() {
+    private void buildAdvancements() {
         ADVANCEMENTS.clear();
 
         Advancement root = getRoot();
@@ -78,7 +78,7 @@ public class ResearchHandler {
         });
     }
 
-    public boolean validateAdvancements() {
+    private boolean validateAdvancements() {
         return ADVANCEMENTS.keySet().stream().allMatch((k) -> ADVANCEMENT_LIST.getAdvancement(k) != null);
     }
 

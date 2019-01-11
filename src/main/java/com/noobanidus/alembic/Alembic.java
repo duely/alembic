@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.LogManager;
@@ -64,6 +65,8 @@ public class Alembic {
 
     @Mod.EventHandler
     public void serverStarted(FMLServerStartedEvent event) {
+        if (AlembicConfig.isDesabled()) return;
+
         MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
         if (server == null) {
             Alembic.LOG.info("Not doing anything with custom advancements as we appear to be on the client.");
@@ -83,5 +86,17 @@ public class Alembic {
         @Config.Name("Research Check Interval")
         @Config.RangeInt(min = 1)
         public static int interval = 9;
+
+        @Config.Comment({"Disable automatic registration of research events", "If Triumph is also loaded, events are automatically disabled"})
+        @Config.Name("Disable Events")
+        public static boolean disable = false;
+
+        public static boolean isDesabled () {
+            if (Loader.isModLoaded("triump")) {
+                return false;
+            }
+
+            return disable;
+        }
     }
 }
