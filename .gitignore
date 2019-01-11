@@ -1,7 +1,24 @@
-.gradle
-.idea
-alembic.iml
-build
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
 classes
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
 run
 src/main/resources/assets/alembic/patchouli_books
