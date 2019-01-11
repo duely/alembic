@@ -18,6 +18,11 @@ public class ResearchPredicate implements IGenericPlayerPredicate {
         this.requirements = requirements;
     }
 
+    public ResearchPredicate(String requirement) {
+        this.requirements = new ArrayList<>();
+        this.requirements.add(requirement);
+    }
+
     @Override
     public boolean test(EntityPlayerMP player) {
         return ThaumcraftCapabilities.knowsResearchStrict(player, requirements.toArray(new String[0]));

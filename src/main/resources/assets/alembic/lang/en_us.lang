@@ -1,6 +1,8 @@
-command.alembic.usage=/alembic custom | /alembic <term>
-command.alembic.scanning=--- --- Searching for research --- ---
-command.alembic.matching=Found matching %s, keys: %s%s.
-command.alembic.stages=. Stages completed: %s
-command.alembic.noresults=No results found for Thaumcraft research using term [%s].
-command.alembic.custom=Found custom research with key %s, requiring research: %s.
+command.research.usage=/research <term>
+command.research.scanning=--- --- Searching for research --- ---
+command.research.matching=Found matching %s, keys: %s%s.
+command.research.stages=. Stages completed: %s
+command.research.noresults=No results found for Thaumcraft research using term [%s].
+command.research.custom=Found custom research with key %s, requiring research: %s.
+command.alembic.count=%d/%d research advancements are loaded.
+command.alembic.usage=/alembic count |
