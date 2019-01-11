@@ -1,0 +1,7 @@
+.gradle
+.idea
+alembic.iml
+build
+classes
+run
+src/main/resources/assets/alembic/patchouli_books
