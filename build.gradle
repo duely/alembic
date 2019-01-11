@@ -56,6 +56,12 @@ runClient {
     args '--username', 'alembic'
 }
 
+jar {
+    manifest {
+        attributes 'FMLAT': 'alembic_at.cfg'
+    }
+}
+
 processResources {
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
