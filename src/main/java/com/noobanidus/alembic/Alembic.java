@@ -25,7 +25,8 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("WeakerAccess")
 public class Alembic {
     public static final String MODID = "alembic";
-    public static final GenericTrigger THAUMCRAFT_RESEARCH_TRIGGER = CriteriaTriggers.register(new GenericTrigger(new ResourceLocation(Alembic.MODID, "research"), ResearchPredicate.ANY));
+    public static final ResourceLocation RESEARCH_ID = new ResourceLocation(Alembic.MODID, "research");
+    public static final GenericTrigger THAUMCRAFT_RESEARCH_TRIGGER = CriteriaTriggers.register(new GenericTrigger(RESEARCH_ID, ResearchPredicate.ANY));
     public static final String MODNAME = "Alembic";
     public static final String VERSION = "GRADLE:VERSION";
     public static final String DEPENDS = "required-after:thaumcraft;";
