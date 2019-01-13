@@ -25,12 +25,7 @@ public class ThaumcraftListener {
 
         @Override
         public void onResourceManagerReload(IResourceManager resourceManager, Predicate<IResourceType> resourcePredicate) {
-            Alembic.RESEARCH_HANDLER.reload(null);
-
-            MinecraftServer server = DimensionManager.getWorld(0).getMinecraftServer();
-            if (server != null) {
-                server.getPlayerList().reloadResources();
-            }
+            Alembic.RESEARCH_HANDLER.reload(Minecraft.getMinecraft().getIntegratedServer());
         }
     }
 }
