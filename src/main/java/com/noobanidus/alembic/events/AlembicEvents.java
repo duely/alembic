@@ -1,6 +1,7 @@
 package com.noobanidus.alembic.events;
 
 import com.noobanidus.alembic.Alembic;
+import com.noobanidus.alembic.AlembicConfig;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandReload;
 import net.minecraft.command.ICommand;
@@ -18,7 +19,7 @@ public class AlembicEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
 
-        if (!player.world.isRemote && player.ticksExisted % (Alembic.AlembicConfig.interval * 20) == 0) {
+        if (!player.world.isRemote && player.ticksExisted % (AlembicConfig.interval * 20) == 0) {
             Alembic.THAUMCRAFT_RESEARCH_TRIGGER.trigger((EntityPlayerMP) player);
         }
     }
@@ -28,12 +29,13 @@ public class AlembicEvents {
         EntityPlayer player = event.getPlayer();
         if (!player.world.isRemote) {
             Alembic.THAUMCRAFT_RESEARCH_TRIGGER.trigger((EntityPlayerMP) player);
+            //player.sendMessage(new TextComponentString("There was a research event and a trigger was fired! " + event.getResearchKey()));
         }
     }
 
     @SubscribeEvent
     public static void onCommand(CommandEvent event) {
-        if (Alembic.AlembicConfig.isDesabled()) return;
+        if (!AlembicConfig.enable) return;
 
         ICommand command = event.getCommand();
 
@@ -53,11 +55,18 @@ public class AlembicEvents {
                 }
 
                 if (server.isCallingFromMinecraftThread()) {
-                    Alembic.RESEARCH_HANDLER.installAdvancements();
+                    Alembic.RESEARCH_HANDLER.reload(server);
                 } else {
-                    server.addScheduledTask(Alembic.RESEARCH_HANDLER::installAdvancements);
+                    server.addScheduledTask(() -> Alembic.RESEARCH_HANDLER.reload(server));
                 }
             }
         }
     }
+
+    /*@SubscribeEvent
+    public static void onAdvancement(AdvancementEvent event) {
+        if (event.getAdvancement().getId().getNamespace().equals("alembic")) {
+            event.getEntityPlayer().sendMessage(new TextComponentString("You got an achievement! " + event.getAdvancement().getId().toString()));
+        }
+    }*/
 }

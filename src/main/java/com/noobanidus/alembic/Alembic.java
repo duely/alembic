@@ -2,20 +2,13 @@ package com.noobanidus.alembic;
 
 import com.noobanidus.alembic.advancements.GenericTrigger;
 import com.noobanidus.alembic.advancements.ResearchPredicate;
-import com.noobanidus.alembic.commands.AlembicCommand;
-import com.noobanidus.alembic.commands.ResearchCommand;
-import com.noobanidus.alembic.events.AlembicEvents;
 import com.noobanidus.alembic.handlers.ResearchHandler;
 import com.noobanidus.alembic.handlers.ThaumcraftListener;
+import com.noobanidus.alembic.proxy.ISidedProxy;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Config;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,67 +30,38 @@ public class Alembic {
     @SuppressWarnings("unused")
     @Mod.Instance(Alembic.MODID)
     public static Alembic instance;
-
     public static ResearchHandler RESEARCH_HANDLER = new ResearchHandler();
+    @SidedProxy(clientSide = "com.noobanidus.alembic.proxy.ClientProxy", modId = MODID, serverSide = "com.noobanidus.alembic.proxy.CommonProxy")
+    public static ISidedProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(AlembicEvents.class);
+        proxy.preInit(event);
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        proxy.init(event);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        proxy.postInit(event);
     }
 
     @Mod.EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
-        LOG.info("Load Complete.");
+        proxy.loadComplete(event);
     }
 
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
-        event.registerServerCommand(new ResearchCommand());
-        event.registerServerCommand(new AlembicCommand());
+        proxy.serverStarting(event);
     }
 
     @Mod.EventHandler
     public void serverStarted(FMLServerStartedEvent event) {
-        if (AlembicConfig.isDesabled()) return;
-
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        if (server == null) {
-            Alembic.LOG.info("Not doing anything with custom advancements as we appear to be on the client.");
-        }
-
-        RESEARCH_HANDLER.reloadFull();
-
-        if (server instanceof IntegratedServer) {
-            TC_LISTENER = new ThaumcraftListener();
-            // Listeners automatically trigger upon registering?
-        }
+        proxy.serverStarted(event);
     }
 
-    @Config(modid = Alembic.MODID)
-    public static class AlembicConfig {
-        @Config.Comment("Specify number of seconds between checks for reearch")
-        @Config.Name("Research Check Interval")
-        @Config.RangeInt(min = 1)
-        public static int interval = 9;
-
-        @Config.Comment({"Disable automatic registration of research events", "If Triumph is also loaded, events are automatically disabled"})
-        @Config.Name("Disable Events")
-        public static boolean disable = false;
-
-        public static boolean isDesabled () {
-            if (Loader.isModLoaded("triump")) {
-                return false;
-            }
-
-            return disable;
-        }
-    }
 }

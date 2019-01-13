@@ -4,6 +4,7 @@ import com.noobanidus.alembic.Alembic;
 import com.noobanidus.alembic.advancements.GenericTrigger;
 import com.noobanidus.alembic.advancements.ResearchPredicate;
 import net.minecraft.advancements.*;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import thaumcraft.api.research.ResearchCategories;
 
@@ -17,14 +18,14 @@ public class ResearchHandler {
     private Map<ResourceLocation, String> RESEARCH = new HashMap<>();
     private Map<ResourceLocation, Advancement> ADVANCEMENTS = new HashMap<>();
 
-    public void reloadFull() {
+    public void reload(MinecraftServer server) {
         buildResearch();
         buildAdvancements();
-        reload();
-    }
+        installAdvancements();
 
-    public void reload() {
-        if (!validateAdvancements()) installAdvancements();
+        if (server != null) {
+            server.getPlayerList().reloadResources();
+        }
     }
 
     public Advancement getRoot() {
@@ -78,10 +79,6 @@ public class ResearchHandler {
         });
     }
 
-    private boolean validateAdvancements() {
-        return ADVANCEMENTS.keySet().stream().allMatch((k) -> ADVANCEMENT_LIST.getAdvancement(k) != null);
-    }
-
     public long invalidAdvancementCount() {
         return ADVANCEMENTS.keySet().stream().filter((k) -> ADVANCEMENT_LIST.getAdvancement(k) != null).count();
     }
@@ -90,21 +87,19 @@ public class ResearchHandler {
         return ADVANCEMENTS.size();
     }
 
-    public void installAdvancements() {
+    private void installAdvancements() {
         int i = 0;
 
         for (Map.Entry<ResourceLocation, Advancement> entry : ADVANCEMENTS.entrySet()) {
             ResourceLocation rl = entry.getKey();
             Advancement adv = entry.getValue();
 
-            if (ADVANCEMENT_LIST.getAdvancement(rl) == null) {
-                ADVANCEMENT_LIST.advancements.put(rl, adv);
-                ADVANCEMENT_LIST.nonRoots.add(adv);
-                if (ADVANCEMENT_LIST.listener != null) {
-                    ADVANCEMENT_LIST.listener.nonRootAdvancementAdded(adv);
-                }
-                i++;
+            ADVANCEMENT_LIST.advancements.put(rl, adv);
+            ADVANCEMENT_LIST.nonRoots.add(adv);
+            if (ADVANCEMENT_LIST.listener != null) {
+                ADVANCEMENT_LIST.listener.nonRootAdvancementAdded(adv);
             }
+            i++;
         }
 
         Alembic.LOG.info(String.format("Successfully loaded %d research events.", i));
